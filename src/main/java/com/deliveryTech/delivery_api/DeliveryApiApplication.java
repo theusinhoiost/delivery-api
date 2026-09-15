@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api;
+package com.deliveryTech.delivery_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
