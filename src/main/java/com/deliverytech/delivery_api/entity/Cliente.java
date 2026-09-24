@@ -21,25 +21,26 @@ public class Cliente {
     private String endereco;
     private boolean ativo;
 
-    //todo: add Data em que o cliente foi cadastrado no sistema
-    // private LocalDateTime dataCadastro;
+    // todo: add Data em que o cliente foi cadastrado no sistema
+    private LocalDateTime dataCadastro;
 
     /*
-    Preenchendo dataCadastro automaticamente com a data/hora atual
-    no momento em que o cliente é salvo pela primeira vez,
-    sem precisar que o controller/service informe esse valor manualmente
+     * Preenchendo dataCadastro automaticamente com a data/hora atual
+     * no momento em que o cliente é salvo pela primeira vez,
+     * sem precisar que o controller/service informe esse valor manualmente
+     * 
+     */
     @PrePersist
     public void prePersist() {
         this.dataCadastro = LocalDateTime.now();
     }
-    */
-
 
     /*
-    @JsonIgnore evita LazyInitializationException ao serializar o Cliente em JSON,
-    já que "pedidos" é uma coleção lazy e a sessão do Hibernate já está fechada
-    quando o Jackson tenta serializar (open-in-view=false)
-    */
+     * @JsonIgnore evita LazyInitializationException ao serializar o Cliente em
+     * JSON,
+     * já que "pedidos" é uma coleção lazy e a sessão do Hibernate já está fechada
+     * quando o Jackson tenta serializar (open-in-view=false)
+     */
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Pedido> pedidos;

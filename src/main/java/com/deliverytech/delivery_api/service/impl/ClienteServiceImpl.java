@@ -28,7 +28,7 @@ public class ClienteServiceImpl implements ClienteService {
     private ModelMapper modelMapper;
 
     @Override
-    public ClienteResponseDTO cadastrarCliente(ClienteDTO dto) {
+    public ClienteResponseDTO cadastrarCliente(Cliente dto) {
         // Validar email único
         if (clienteRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new BusinessException("Email já cadastrado: " + dto.getEmail());

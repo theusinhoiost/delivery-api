@@ -41,4 +41,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT COUNT(c) FROM Cliente c")
     long countClientes();
 
+    Object cadastrarCliente(String string);
+
 }

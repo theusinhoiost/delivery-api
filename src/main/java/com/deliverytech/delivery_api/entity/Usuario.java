@@ -3,7 +3,10 @@ package com.deliverytech.delivery_api.entity;
 import com.deliverytech.delivery_api.enums.Role;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import lombok.NoArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,8 +18,20 @@ import java.util.Collections;
 
 @Entity
 @Data
+@NoArgsConstructor // Gera o construtor vazio
+@AllArgsConstructor // Gera o construtor com todos os atributos
 @Table(name = "usuario")
 public class Usuario implements UserDetails {
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,19 +59,6 @@ public class Usuario implements UserDetails {
     @Column(name = "restaurante_id")
     private Long restauranteId;
 
-    // Contrutor
-
-    public Usuario() {
-
-        this.email = email;
-        this.senha = senha;
-        this.nome = nome;
-        this.role = role;
-        this.ativo = ativo;
-        this.dataCriacao = LocalDateTime.now();
-
-    }
-
     // implmentação UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,33 +66,4 @@ public class Usuario implements UserDetails {
                 new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return ativo;
-    }
 }

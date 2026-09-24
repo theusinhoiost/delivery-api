@@ -153,4 +153,12 @@ public class RestauranteServiceImpl implements RestauranteService {
         dto.setAtivo(restaurante.isAtivo());
         return dto;
     }
+
+    @Override
+    public List<RestauranteResponseDTO> buscarRestauranteAvaliacao(BigDecimal nota) {
+        return restauranteRepository.findByAvaliacaoGreaterThanEqualAndAtivoTrue(nota)
+                .stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
 }

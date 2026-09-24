@@ -69,3 +69,11 @@ O `@Transactional` gerencia o ciclo de vida das transações com o banco de dado
 ## 4. Auditoria e Datas Automáticas (`@PrePersist`)
 * **`@PrePersist`**: Método anotado na entidade que executa uma lógica automaticamente logo antes de o registro ser inserido no banco pela primeira vez (ótimo para definir `dataCadastro = LocalDateTime.now()`).
 * *Alternativa nativa:* Anotações como `@CreationTimestamp` do Hibernate reduzem ainda mais o boilerplate para esse mesmo cenário.
+
+
+## Como iniciar os testes 
+
+### Realizar o teste 
+mvn clean test
+### Onde o JaCoCo salva os resultados 
+target/site/jacoco/index.html

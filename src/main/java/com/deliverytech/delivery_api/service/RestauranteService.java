@@ -38,4 +38,8 @@ public interface RestauranteService {
 
     // Busca restaurantes próximos a um CEP dentro de um raio (km)
     List<RestauranteResponseDTO> buscarRestaurantesProximos(String cep, Integer raio);
+
+    // Buscar restaurante pela avaliação
+    List<RestauranteResponseDTO> buscarRestauranteAvaliacao(BigDecimal nota);
+
 }
