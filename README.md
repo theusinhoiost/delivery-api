@@ -226,12 +226,64 @@ Ao anotar métodos de leitura (`buscar`, `listar`):
 
 ---
 
-### 7. 🏷️ Auditoria com `@PrePersist`
-* Executa um método automaticamente no momento exato antes de salvar a entidade pela primeira vez no banco de dados.
-* Ideal para preencher datas de criação automaticamente:
-  ```java
-  @PrePersist
-  public void prePersist() {
-      this.dataCadastro = LocalDateTime.now();
-  }
-  ```
+### 7. 🏷️ Auditoria de Datas: `@PrePersist` e Alternativas
+
+#### O que é o `@PrePersist`?
+Executa um método de callback automaticamente no momento exato antes de salvar a entidade pela primeira vez no banco (INSERT):
+```java
+@PrePersist
+public void prePersist() {
+    this.dataCadastro = LocalDateTime.now();
+}
+```
+
+---
+
+#### 🔄 Outras Opções Além do `@PrePersist`:
+
+1. **Anotações do Hibernate (`@CreationTimestamp` e `@UpdateTimestamp`) — *Mais Popular*:**
+   Não precisa de método algum, basta anotar o próprio campo:
+   ```java
+   @CreationTimestamp
+   @Column(nullable = false, updatable = false)
+   private LocalDateTime dataCadastro;
+
+   @UpdateTimestamp
+   private LocalDateTime dataAtualizacao; // atualiza a cada UPDATE
+   ```
+
+2. **Valor Padrão no Atributo Java — *Mais Simples*:**
+   Inicializa o campo na criação do objeto em memória:
+   ```java
+   @Column(name = "data_criacao", nullable = false)
+   private LocalDateTime dataCriacao = LocalDateTime.now();
+   ```
+
+3. **Spring Data JPA Auditing — *Padrão Corporativo*:**
+   Habilita auditoria com `@EnableJpaAuditing` e anota a entidade com `@EntityListeners(AuditingEntityListener.class)`. Permite registrar data e quem fez a alteração:
+   ```java
+   @CreatedDate
+   @Column(updatable = false)
+   private LocalDateTime dataCadastro;
+
+   @LastModifiedDate
+   private LocalDateTime dataAtualizacao;
+
+   @CreatedBy
+   private String criadoPor; // usuário autenticado no Spring Security
+   ```
+
+4. **Direto no Banco de Dados (SQL `DEFAULT`) — *Nível Banco*:**
+   A responsabilidade da data fica a cargo do motor do banco (Postgres/MySQL/H2):
+   ```java
+   @Column(insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+   private LocalDateTime dataCadastro;
+   ```
+💡 Qual escolher no dia a dia?
+Quer praticidade e código limpo? ➔ Opção 1 (@CreationTimestamp)
+Quer registrar apenas no objeto sem anotações extras? ➔ Opção 2 (= LocalDateTime.now())
+Precisa de auditoria completa com usuário que criou/editou? ➔ Opção 3 (Spring Data Auditing)
+---
+# Diagrama 1.0 da API
+
+![alt text](diagram.png)
