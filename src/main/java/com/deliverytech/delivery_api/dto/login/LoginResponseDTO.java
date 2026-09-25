@@ -1,4 +1,6 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.login;
+
+import com.deliverytech.delivery_api.dto.user.UserResponseDTO;
 
 public class LoginResponseDTO {
 

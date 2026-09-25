@@ -1,9 +1,9 @@
 package com.deliverytech.delivery_api.service;
 
-import com.deliverytech.delivery_api.dto.CalculoPedidoDTO;
-import com.deliverytech.delivery_api.dto.CalculoPedidoResponseDTO;
-import com.deliverytech.delivery_api.dto.PedidoDTO;
-import com.deliverytech.delivery_api.dto.PedidoResponseDTO;
+import com.deliverytech.delivery_api.dto.pedido.CalculoPedidoDTO;
+import com.deliverytech.delivery_api.dto.pedido.CalculoPedidoResponseDTO;
+import com.deliverytech.delivery_api.dto.pedido.PedidoDTO;
+import com.deliverytech.delivery_api.dto.pedido.PedidoResponseDTO;
 import com.deliverytech.delivery_api.enums.StatusPedido;
 
 import org.springframework.data.domain.Page;

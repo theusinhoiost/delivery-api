@@ -12,50 +12,50 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                /* 
-                 Configurações de informações globais da API. 
-                 Estes dados aparecerão no cabeçalho da página de documentação do Swagger UI.
-                */
-                .info(new Info()
-                        /* Define o título da aplicação na documentação */
-                        .title("DeliveryTech API")
-                        /* Define a versão atual da API */
-                        .version("1.0.0")
-                        /* Breve descrição do propósito e das funcionalidades da API */
-                        .description("API REST completa para plataforma de delivery")
-                        
-                        /* 
-                         Define as informações de contato da equipe responsável pela API,
-                         útil para que os consumidores saibam a quem recorrer em caso de dúvidas.
-                        */
-                        .contact(new Contact()
-                                .name("Equipe DeliveryTech")
-                                .email("dev@deliverytech.com")
-                                .url("https://deliverytech.com"))
-                        
-                        /* 
-                         Define a licença de uso e distribuição da API,
-                         essencial para definir os limites jurídicos de uso por terceiros.
-                        */
-                        .license(new License()
-                                .name("MIT License")
-                                .url("https://opensource.org/licenses/MIT")))
-                
-                /* 
-                 Define a lista de servidores/ambientes onde a API está hospedada.
-                 Permite que o usuário teste as rotas diretamente do Swagger UI 
-                 alternando entre ambiente local, homologação ou produção.
-                */
-                .servers(List.of(
-                        new Server()
-                                .url("http://localhost:8080")
-                                .description("Servidor de Desenvolvimento"),
-                        new Server()
-                                .url("https://api.deliverytech.com")
-                                .description("Servidor de Produção")
-                ));
-    }
+        @Bean
+        public OpenAPI customOpenAPI() {
+                return new OpenAPI()
+                                /*
+                                 * Configurações de informações globais da API.
+                                 * Estes dados aparecerão no cabeçalho da página de documentação do Swagger UI.
+                                 */
+                                .info(new Info()
+                                                /* Define o título da aplicação na documentação */
+                                                .title("DeliveryTech API/Backend")
+                                                /* Define a versão atual da API */
+                                                .version("1.0.0")
+                                                /* Breve descrição do propósito e das funcionalidades da API */
+                                                .description("API REST completa para plataforma de delivery")
+
+                                                /*
+                                                 * Define as informações de contato da equipe responsável pela API,
+                                                 * útil para que os consumidores saibam a quem recorrer em caso de
+                                                 * dúvidas.
+                                                 */
+                                                .contact(new Contact()
+                                                                .name("Equipe DeliveryTech")
+                                                                .email("dev@deliverytech.com")
+                                                                .url("https://deliverytech.com"))
+
+                                                /*
+                                                 * Define a licença de uso e distribuição da API,
+                                                 * essencial para definir os limites jurídicos de uso por terceiros.
+                                                 */
+                                                .license(new License()
+                                                                .name("MIT License")
+                                                                .url("https://opensource.org/licenses/MIT")))
+
+                                /*
+                                 * Define a lista de servidores/ambientes onde a API está hospedada.
+                                 * Permite que o usuário teste as rotas diretamente do Swagger UI
+                                 * alternando entre ambiente local, homologação ou produção.
+                                 */
+                                .servers(List.of(
+                                                new Server()
+                                                                .url("http://localhost:8080")
+                                                                .description("Servidor de Desenvolvimento"),
+                                                new Server()
+                                                                .url("https://api.deliverytech.com")
+                                                                .description("Servidor de Produção")));
+        }
 }

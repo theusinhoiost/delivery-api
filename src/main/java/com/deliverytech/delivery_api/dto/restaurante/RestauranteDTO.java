@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.restaurante;
 
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;

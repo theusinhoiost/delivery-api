@@ -1,8 +1,9 @@
 package com.deliverytech.delivery_api.service;
 
+import com.deliverytech.delivery_api.dto.restaurante.RegisterRequestDTO;
 import com.deliverytech.delivery_api.entity.Usuario;
 import com.deliverytech.delivery_api.repository.UsuarioRepository;
-import com.deliverytech.delivery_api.dto.RegisterRequestDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

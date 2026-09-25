@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Data
 @Entity
 public class Pedido {
@@ -23,14 +22,14 @@ public class Pedido {
     private BigDecimal taxaEntrega;
     private BigDecimal valorTotal;
 
-    //todo; add campo de observação do pedido
+    // todo; add campo de observação do pedido
 
     /*
-    todo: add campo de forma de pagamento 
-    (enum: DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO, PIX, OUTROS)
-    */
+     * todo: add campo de forma de pagamento
+     * (enum: DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO, PIX, OUTROS)
+     */
 
-    //para armazenar o nome do enum no banco, usamos @Enumerated(EnumType.STRING)
+    // para armazenar o nome do enum no banco, usamos @Enumerated(EnumType.STRING)
     @Enumerated(EnumType.STRING)
     private StatusPedido statusPedido;
 
@@ -39,7 +38,8 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    // relacionamento com Restaurante com @ManyToOne, pois um pedido pertence a um restaurante
+    // relacionamento com Restaurante com @ManyToOne, pois um pedido pertence a um
+    // restaurante
     @ManyToOne
     @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;

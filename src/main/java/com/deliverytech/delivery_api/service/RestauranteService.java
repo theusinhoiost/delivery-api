@@ -1,10 +1,10 @@
 package com.deliverytech.delivery_api.service;
 
-import com.deliverytech.delivery_api.dto.RestauranteDTO;
-import com.deliverytech.delivery_api.dto.RestauranteResponseDTO;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.deliverytech.delivery_api.dto.restaurante.RestauranteDTO;
+import com.deliverytech.delivery_api.dto.restaurante.RestauranteResponseDTO;
 
 import java.math.BigDecimal;
 import java.util.List;

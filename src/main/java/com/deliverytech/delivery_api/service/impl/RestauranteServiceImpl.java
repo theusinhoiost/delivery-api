@@ -1,7 +1,7 @@
 package com.deliverytech.delivery_api.service.impl;
 
-import com.deliverytech.delivery_api.dto.RestauranteDTO;
-import com.deliverytech.delivery_api.dto.RestauranteResponseDTO;
+import com.deliverytech.delivery_api.dto.restaurante.RestauranteDTO;
+import com.deliverytech.delivery_api.dto.restaurante.RestauranteResponseDTO;
 import com.deliverytech.delivery_api.entity.Restaurante;
 import com.deliverytech.delivery_api.repository.RestauranteRepository;
 import com.deliverytech.delivery_api.service.RestauranteService;

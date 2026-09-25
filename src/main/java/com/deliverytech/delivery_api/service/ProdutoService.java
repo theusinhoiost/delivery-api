@@ -1,7 +1,7 @@
 package com.deliverytech.delivery_api.service;
 
-import com.deliverytech.delivery_api.dto.ProdutoDTO;
-import com.deliverytech.delivery_api.dto.ProdutoResponseDTO;
+import com.deliverytech.delivery_api.dto.produto.ProdutoDTO;
+import com.deliverytech.delivery_api.dto.produto.ProdutoResponseDTO;
 
 import java.util.List;
 
@@ -32,6 +32,7 @@ public interface ProdutoService {
     // Busca produtos pelo nome (busca parcial)
     List<ProdutoResponseDTO> buscarProdutosPorNome(String nome);
 
-    // Lista os produtos de um restaurante, opcionalmente filtrando por disponibilidade
+    // Lista os produtos de um restaurante, opcionalmente filtrando por
+    // disponibilidade
     List<ProdutoResponseDTO> buscarProdutosPorRestaurante(Long restauranteId, Boolean disponivel);
 }

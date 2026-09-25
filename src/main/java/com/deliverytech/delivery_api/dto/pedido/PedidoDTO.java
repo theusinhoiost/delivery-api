@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.pedido;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;

@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.produto;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

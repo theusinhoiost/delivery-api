@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.user;
 
 import com.deliverytech.delivery_api.entity.Usuario;
 import com.deliverytech.delivery_api.enums.Role;

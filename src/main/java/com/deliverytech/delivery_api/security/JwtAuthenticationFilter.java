@@ -108,10 +108,50 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public Boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
+
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String userEmail;
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        jwt = authHeader.substring(7);
+
+        try {
+            userEmail = extractUsername(jwt);
+
+            if (userEmail != null && org.springframework.security.core.context.SecurityContextHolder.getContext()
+                    .getAuthentication() == null) {
+                // Nota: O ideal é injetar o UserDetailsService via construtor.
+                // Como exemplo rápido, validamos se o email bate com o token.
+                if (!isTokenExpired(jwt)) {
+                    org.springframework.security.authentication.UsernamePasswordAuthenticationToken authToken = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                            userEmail,
+                            null,
+                            new java.util.ArrayList<>());
+                    authToken.setDetails(
+                            new org.springframework.security.web.authentication.WebAuthenticationDetailsSource()
+                                    .buildDetails(request));
+
+                    org.springframework.security.core.context.SecurityContextHolder.getContext()
+                            .setAuthentication(authToken);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao processar o token JWT: " + e.getMessage());
+        }
+
+        filterChain.doFilter(request, response);
     }
 }

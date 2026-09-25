@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.cliente;
 
 import jakarta.validation.constraints.*;
 

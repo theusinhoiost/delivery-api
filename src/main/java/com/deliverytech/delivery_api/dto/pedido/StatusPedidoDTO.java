@@ -1,4 +1,4 @@
-package com.deliverytech.delivery_api.dto;
+package com.deliverytech.delivery_api.dto.pedido;
 
 import com.deliverytech.delivery_api.enums.StatusPedido;
 import jakarta.validation.constraints.NotNull;
