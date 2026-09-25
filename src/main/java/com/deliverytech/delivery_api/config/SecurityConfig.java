@@ -93,9 +93,13 @@ public class SecurityConfig {
 
                                                 // Endpoints públicos
                                                 .requestMatchers("/api/auth/**").permitAll()
-                                                .requestMatchers("/api/restaurantes").permitAll()
-                                                .requestMatchers("/api/produtos").permitAll()
-                                                .requestMatchers("/actuator/health").permitAll()
+                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
+                                                                "/api/restaurantes/**")
+                                                .permitAll()
+                                                .requestMatchers(org.springframework.http.HttpMethod.GET,
+                                                                "/api/produtos/**")
+                                                .permitAll()
+                                                .requestMatchers("/health", "/info", "/actuator/**").permitAll()
                                                 .requestMatchers("/h2-console/**").permitAll()
 
                                                 // Demais endpoints

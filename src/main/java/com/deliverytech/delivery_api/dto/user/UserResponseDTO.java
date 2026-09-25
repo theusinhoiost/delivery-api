@@ -2,9 +2,15 @@ package com.deliverytech.delivery_api.dto.user;
 
 import com.deliverytech.delivery_api.entity.Usuario;
 import com.deliverytech.delivery_api.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponseDTO {
     private Long id;
     private String nome;
@@ -14,10 +20,6 @@ public class UserResponseDTO {
     private LocalDateTime dataCriacao;
     private Long restauranteId;
 
-    // Construtores
-    public UserResponseDTO() {
-    }
-
     public UserResponseDTO(Usuario usuario) {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
@@ -26,62 +28,5 @@ public class UserResponseDTO {
         this.ativo = usuario.getAtivo();
         this.dataCriacao = usuario.getDataCriacao();
         this.restauranteId = usuario.getRestauranteId();
-    }
-
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Long getRestauranteId() {
-        return restauranteId;
-    }
-
-    public void setRestauranteId(Long restauranteId) {
-        this.restauranteId = restauranteId;
     }
 }

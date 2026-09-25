@@ -1,14 +1,18 @@
 package com.deliverytech.delivery_api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Health & Info", description = "Endpoints para verificação de status e informações da aplicação")
 public class HealthController {
 
   @GetMapping("/health")
+  @Operation(summary = "Verificar integridade da API", description = "Retorna status UP e dados do ambiente")
   public Map<String, String> health() {
     return Map.of(
         "status",
@@ -22,6 +26,7 @@ public class HealthController {
   }
 
   @GetMapping("/info")
+  @Operation(summary = "Informações da aplicação", description = "Retorna versão, desenvolvedor e tecnologias utilizadas")
   public AppInfo info() {
     return new AppInfo(
         "Delivery Tech API",

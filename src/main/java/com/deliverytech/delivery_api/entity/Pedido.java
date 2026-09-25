@@ -21,6 +21,7 @@ public class Pedido {
     private BigDecimal subtotal;
     private BigDecimal taxaEntrega;
     private BigDecimal valorTotal;
+    private String enderecoEntrega;
 
     // todo; add campo de observação do pedido
 

@@ -1,8 +1,13 @@
 package com.deliverytech.delivery_api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
 @Schema(description = "Wrapper padrão para respostas da API")
 public class ApiResponseWrapper<T> {
 
@@ -33,46 +38,7 @@ public class ApiResponseWrapper<T> {
         return new ApiResponseWrapper<>(true, data, message);
     }
 
-    /*
-     * Quando usamor a class <T> (com uma Letra T ou qualquer outra letra)
-     * Nós estamos dizendo pro java que nós não sabemos o tipo da variavel,
-     * mas queremos garantir que em todo lugar que aprecer T
-     * ela vai garantir o mesmo tipo seja usado
-     */
     public static <T> ApiResponseWrapper<T> error(String message) {
         return new ApiResponseWrapper<>(false, null, message);
-    }
-
-    // Getters e Setters
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
     }
 }

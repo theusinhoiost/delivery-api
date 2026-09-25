@@ -56,6 +56,15 @@ public class SwaggerConfig {
                                                                 .description("Servidor de Desenvolvimento"),
                                                 new Server()
                                                                 .url("https://api.deliverytech.com")
-                                                                .description("Servidor de Produção")));
+                                                                .description("Servidor de Produção")))
+                                .addSecurityItem(new io.swagger.v3.oas.models.security.SecurityRequirement()
+                                                .addList("Bearer Authentication"))
+                                .components(new io.swagger.v3.oas.models.Components()
+                                                .addSecuritySchemes("Bearer Authentication",
+                                                                new io.swagger.v3.oas.models.security.SecurityScheme()
+                                                                                .name("Bearer Authentication")
+                                                                                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+                                                                                .scheme("bearer")
+                                                                                .bearerFormat("JWT")));
         }
 }

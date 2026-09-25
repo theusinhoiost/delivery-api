@@ -2,8 +2,15 @@ package com.deliverytech.delivery_api.dto.pedido;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PedidoDTO {
 
     @NotNull(message = "Cliente é obrigatório")
@@ -19,37 +26,4 @@ public class PedidoDTO {
     @NotEmpty(message = "Pedido deve ter pelo menos um item")
     @Valid
     private List<ItemPedidoDTO> itens;
-
-    // Getters e Setters
-    public Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public Long getRestauranteId() {
-        return restauranteId;
-    }
-
-    public void setRestauranteId(Long restauranteId) {
-        this.restauranteId = restauranteId;
-    }
-
-    public String getEnderecoEntrega() {
-        return enderecoEntrega;
-    }
-
-    public void setEnderecoEntrega(String enderecoEntrega) {
-        this.enderecoEntrega = enderecoEntrega;
-    }
-
-    public List<ItemPedidoDTO> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemPedidoDTO> itens) {
-        this.itens = itens;
-    }
 }

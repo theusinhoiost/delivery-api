@@ -2,20 +2,18 @@ package com.deliverytech.delivery_api.dto.pedido;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalculoPedidoDTO {
 
     @NotEmpty(message = "A lista de itens não pode estar vazia")
     @Valid
-    private List<?> itens;
-
-    // Getters e Setters
-    public List<?> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<?> itens) {
-        this.itens = itens;
-    }
+    private List<ItemPedidoDTO> itens;
 }

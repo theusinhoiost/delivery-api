@@ -100,8 +100,9 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setCliente(cliente);
         pedido.setRestaurante(restaurante);
         pedido.setDataPedido(LocalDateTime.now());
-        setPedidoStatus(pedido, StatusPedido.PENDENTE);
-        setProperty(pedido, "EnderecoEntrega", dto.getEnderecoEntrega());
+        pedido.setNumeroPedido("PED" + System.currentTimeMillis());
+        pedido.setStatusPedido(StatusPedido.PENDENTE);
+        pedido.setEnderecoEntrega(dto.getEnderecoEntrega());
         pedido.setSubtotal(subtotal);
         pedido.setTaxaEntrega(taxaEntrega);
         pedido.setValorTotal(valorTotal);
@@ -187,8 +188,7 @@ public class PedidoServiceImpl implements PedidoService {
     public CalculoPedidoResponseDTO calcularTotalPedido(CalculoPedidoDTO dto) {
         BigDecimal total = BigDecimal.ZERO;
 
-        for (Object itemObject : dto.getItens()) {
-            ItemPedidoDTO item = (ItemPedidoDTO) itemObject;
+        for (ItemPedidoDTO item : dto.getItens()) {
             Produto produto = produtoRepository.findById(item.getProdutoId())
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
@@ -215,35 +215,11 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private StatusPedido getPedidoStatus(Pedido pedido) {
-        Object status = getProperty(pedido, "Status");
-        return status instanceof StatusPedido ? (StatusPedido) status : null;
+        return pedido.getStatusPedido();
     }
 
     private void setPedidoStatus(Pedido pedido, StatusPedido status) {
-        setProperty(pedido, "Status", status);
-    }
-
-    private Object getProperty(Object target, String property) {
-        try {
-            Method method = target.getClass().getMethod("get" + property);
-            return method.invoke(target);
-        } catch (ReflectiveOperationException e) {
-            throw new BusinessException("Propriedade não encontrada: " + property);
-        }
-    }
-
-    private void setProperty(Object target, String property, Object value) {
-        try {
-            for (Method method : target.getClass().getMethods()) {
-                if (method.getName().equals("set" + property) && method.getParameterCount() == 1) {
-                    method.invoke(target, value);
-                    return;
-                }
-            }
-            throw new NoSuchMethodException(property);
-        } catch (ReflectiveOperationException e) {
-            throw new BusinessException("Propriedade não encontrada: " + property);
-        }
+        pedido.setStatusPedido(status);
     }
 
     private boolean isTransicaoValida(StatusPedido statusAtual, StatusPedido novoStatus) {

@@ -1,24 +1,15 @@
 package com.deliverytech.delivery_api.dto.pedido;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalculoPedidoResponseDTO {
 
     private BigDecimal valorTotal;
-
-    public CalculoPedidoResponseDTO() {
-    }
-
-    public CalculoPedidoResponseDTO(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    // Getters e Setters
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
 }

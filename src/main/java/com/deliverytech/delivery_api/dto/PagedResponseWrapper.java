@@ -1,9 +1,15 @@
 package com.deliverytech.delivery_api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Wrapper para respostas paginadas")
 public class PagedResponseWrapper<T> {
 
@@ -28,6 +34,9 @@ public class PagedResponseWrapper<T> {
         this.links = new PageLinks(page);
     }
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Schema(description = "Informações de paginação")
     public static class PageInfo {
         @Schema(description = "Número da página atual (base 0)", example = "0")
@@ -47,43 +56,11 @@ public class PagedResponseWrapper<T> {
 
         @Schema(description = "É a última página", example = "false")
         private boolean last;
-
-        public PageInfo(int number, int size, long totalElements, int totalPages,
-                boolean first, boolean last) {
-            this.number = number;
-            this.size = size;
-            this.totalElements = totalElements;
-            this.totalPages = totalPages;
-            this.first = first;
-            this.last = last;
-        }
-
-        // Getters
-        public int getNumber() {
-            return number;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-        public long getTotalElements() {
-            return totalElements;
-        }
-
-        public int getTotalPages() {
-            return totalPages;
-        }
-
-        public boolean isFirst() {
-            return first;
-        }
-
-        public boolean isLast() {
-            return last;
-        }
     }
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Schema(description = "Links de navegação")
     public static class PageLinks {
         @Schema(description = "Link para primeira página")
@@ -111,35 +88,5 @@ public class PagedResponseWrapper<T> {
                 this.prev = baseUrl + "?page=" + (page.getNumber() - 1) + "&size=" + page.getSize();
             }
         }
-
-        // Getters
-        public String getFirst() {
-            return first;
-        }
-
-        public String getLast() {
-            return last;
-        }
-
-        public String getNext() {
-            return next;
-        }
-
-        public String getPrev() {
-            return prev;
-        }
-    }
-
-    // Getters
-    public List<T> getContent() {
-        return content;
-    }
-
-    public PageInfo getPage() {
-        return page;
-    }
-
-    public PageLinks getLinks() {
-        return links;
     }
 }

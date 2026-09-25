@@ -34,8 +34,8 @@ public class ClienteServiceImpl implements ClienteService {
             throw new BusinessException("Email já cadastrado: " + dto.getEmail());
         }
 
-        // Converter DTO para entidade
-        Cliente cliente = modelMapper.map(dto, Cliente.class);
+        // Ativar cliente
+        Cliente cliente = dto;
         cliente.setAtivo(true);
 
         // Salvar cliente
