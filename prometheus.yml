@@ -1,0 +1,15 @@
+# ==========================================================
+# 📊 Configuração do Prometheus
+# ==========================================================
+global:
+  scrape_interval: 15s # De quanto em quanto tempo o Prometheus coleta dados
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Coleta de métricas da nossa API Spring Boot
+  - job_name: "delivery-api"
+    metrics_path: "/actuator/prometheus" # Endpoint exposto pelo Spring Actuator
+    scrape_interval: 5s # Coleta a cada 5 segundos para testes rápidos
+    static_configs:
+      - targets: ["delivery-api:8080"] # Nome do serviço no docker-compose e porta interna
+

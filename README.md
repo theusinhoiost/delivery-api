@@ -63,11 +63,34 @@ JWT_SECRET="minhaChaveSuperSecreta" java -jar target/delivery-api-0.0.1-SNAPSHOT
 
 ---
 
+### 4. Modo Docker & Observabilidade (API + Prometheus + Grafana)
+Para subir o ecossistema completo com 1 único comando usando **Docker Compose**:
+
+```bash
+# 1. Compilar o JAR da API:
+./mvnw clean package -DskipTests
+
+# 2. Subir a API, Prometheus e Grafana em segundo plano:
+docker compose up -d --build
+
+# Para ver os logs em tempo real:
+docker compose logs -f
+
+# Para parar todos os containers:
+docker compose down
+```
+
+---
+
 ## 🔗 Links Úteis da Aplicação Rodando
 * **Swagger UI (Documentação Interativa):** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 * **Especificação OpenAPI JSON:** [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 * **Health Check:** [http://localhost:8080/health](http://localhost:8080/health)
 * **Informações da Aplicação:** [http://localhost:8080/info](http://localhost:8080/info)
+* **Health Check Geral:** [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
+* **Métricas Prometheus:** [http://localhost:8080/actuator/prometheus](http://localhost:8080/actuator/prometheus)
+* **Prometheus Dashboard:** [http://localhost:9090](http://localhost:9090)
+* **Grafana (Painéis e Gráficos):** [http://localhost:3000](http://localhost:3000) *(usuário: `admin`, senha: `admin`)*
 * **Console H2 Database:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
   * **JDBC URL:** `jdbc:h2:mem:deliverydb`
   * **User Name:** `sa`
@@ -279,11 +302,48 @@ public void prePersist() {
    @Column(insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
    private LocalDateTime dataCadastro;
    ```
-💡 Qual escolher no dia a dia?
+5. 💡 Qual escolher no dia a dia?
+
 Quer praticidade e código limpo? ➔ Opção 1 (@CreationTimestamp)
 Quer registrar apenas no objeto sem anotações extras? ➔ Opção 2 (= LocalDateTime.now())
 Precisa de auditoria completa com usuário que criou/editou? ➔ Opção 3 (Spring Data Auditing)
+
 ---
+
+### 8. 🐳 Docker, Docker Compose e Observabilidade
+
+#### Regra de Ouro das Portas (`FORA : DENTRO`)
+```text
+           -p 3000:3000
+                ▲    ▲
+                │    └── Porta interna onde o programa escuta (dentro do container)
+                └─────── Porta externa no seu computador/navegador (localhost:3000)
+```
+
+#### Como os Containers Conversam Entre Si
+* **Nunca use `localhost`** para falar de um container com outro (dentro de um container, `localhost` aponta para ele mesmo).
+* Na mesma rede do `docker-compose`, **eles conversam usando o NOME DO SERVIÇO e a PORTA INTERNA**:
+  - Ex: Para o Prometheus coletar da API: `http://delivery-api:8080/actuator/prometheus`.
+  - Ex: Para o Grafana consultar o Prometheus: `http://prometheus:9090`.
+
+#### Arquitetura de Monitoramento Deste Projeto
+1. **API Java (Spring Boot):** Expõe `/actuator/prometheus` com métricas geradas via Micrometer.
+2. **Prometheus:** Lê periodicamente o endpoint da API a cada 5 segundos e guarda o histórico de dados.
+3. **Grafana:** Painel web visual onde você conecta no Prometheus (`http://prometheus:9090`) para criar gráficos.
+
+#### Colinha de Comandos Docker Mais Usados
+* `docker compose up -d` : Sobe todos os containers em segundo plano.
+* `docker compose up -d --build` : Reconstrói a imagem da API e sobe todos os containers.
+* `docker compose ps` : Lista os containers em execução e o status deles.
+* `docker compose logs -f` : Acompanha os logs de todos os containers em tempo real.
+* `docker compose logs -f delivery-api` : Acompanha apenas os logs da API Java.
+* `docker compose down` : Para e remove todos os containers da aplicação.
+* `docker compose down -v` : Para e remove também os volumes (zera dados salvos do Grafana).
+* `docker stop $(docker ps -aq)` : Para parar TODOS containers .
+* `docker stop $(docker ps -aq) && docker rm $(docker ps -aq)` : Para e remove todos os containers .
+
+---
+
 # Diagrama 1.0 da API
 
 ![alt text](diagram.png)
