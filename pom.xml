@@ -158,6 +158,15 @@
     <groupId>io.zipkin.reporter2</groupId>
     <artifactId>zipkin-reporter-brave</artifactId>
 </dependency>
+  <!-- CACHE & REDIS -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-cache</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
 	</dependencies>
 
 	<build>
@@ -165,7 +174,7 @@
 		<plugin>
     <groupId>org.jacoco</groupId>
     <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.12</version>
+    <version>0.8.13</version>
     <executions>
         <execution>
             <goals>

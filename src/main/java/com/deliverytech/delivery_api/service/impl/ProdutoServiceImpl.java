@@ -9,6 +9,8 @@ import com.deliverytech.delivery_api.repository.RestauranteRepository;
 import com.deliverytech.delivery_api.service.ProdutoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "produtos", key = "#id")
     public ProdutoResponseDTO buscarProdutoPorId(Long id) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + id));
@@ -71,6 +74,8 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
+
+    @CacheEvict(value = "produtos", key = "#id")
     public void removerProduto(Long id) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + id));

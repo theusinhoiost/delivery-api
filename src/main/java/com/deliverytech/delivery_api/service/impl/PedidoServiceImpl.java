@@ -12,6 +12,9 @@ import com.deliverytech.delivery_api.exception.BusinessException;
 import com.deliverytech.delivery_api.exception.EntityNotFoundException;
 import com.deliverytech.delivery_api.repository.*;
 import com.deliverytech.delivery_api.service.PedidoService;
+
+import jakarta.persistence.Cacheable;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.lang.reflect.Method;
 
 @Service
 @Transactional
@@ -57,6 +59,7 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         // 2. Validar restaurante existe e está ativo
+
         Restaurante restaurante = restauranteRepository.findById(dto.getRestauranteId())
                 .orElseThrow(() -> new EntityNotFoundException("Restaurante não encontrado"));
 

@@ -84,6 +84,16 @@ services:
     networks:
       - delivery-network
 
+  # 6. ⚡ REDIS (Cache em Memória)
+  redis:
+    image: redis:7-alpine
+    container_name: delivery-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - delivery-network
+
 # Rede compartilhada para os containers se comunicarem pelo nome do serviço
 networks:
   delivery-network:

@@ -7,6 +7,9 @@ import com.deliverytech.delivery_api.repository.RestauranteRepository;
 import com.deliverytech.delivery_api.service.RestauranteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -64,6 +67,11 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "restaurante", key = "#id"),
+            @CacheEvict(value = "restaurantesPorCategoria", allEntries = true),
+            @CacheEvict(value = "taxasEntrega", allEntries = true)
+    })
     public RestauranteResponseDTO atualizarRestaurante(Long id, RestauranteDTO dto) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Restaurante não encontrado: " + id));
@@ -98,6 +106,7 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
+    @Cacheable(value = "restaurante", key = "#categoria")
     @Transactional(readOnly = true)
     public List<RestauranteResponseDTO> buscarRestaurantesPorCategoria(String categoria) {
         return restauranteRepository.findByCategoriaAndAtivoTrue(categoria)
@@ -108,6 +117,7 @@ public class RestauranteServiceImpl implements RestauranteService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "taxasEntrega", key = "#id + '-' + #cep")
     public BigDecimal calcularTaxaEntrega(Long id, String cep) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Restaurante não encontrado: " + id));
@@ -117,10 +127,20 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
+    @Cacheable(value = "restaurantesProximos", key = "#cep + '-' + #raio")
     @Transactional(readOnly = true)
     public List<RestauranteResponseDTO> buscarRestaurantesProximos(String cep, Integer raio) {
         // TODO: substituir por lógica real de geolocalização
         return restauranteRepository.findByAtivoTrue()
+                .stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Cacheable(value = "restauranteAvaliacao", key = "#nota")
+    public List<RestauranteResponseDTO> buscarRestauranteAvaliacao(BigDecimal nota) {
+        return restauranteRepository.findByAvaliacaoGreaterThanEqualAndAtivoTrue(nota)
                 .stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
@@ -154,11 +174,4 @@ public class RestauranteServiceImpl implements RestauranteService {
         return dto;
     }
 
-    @Override
-    public List<RestauranteResponseDTO> buscarRestauranteAvaliacao(BigDecimal nota) {
-        return restauranteRepository.findByAvaliacaoGreaterThanEqualAndAtivoTrue(nota)
-                .stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
-    }
 }
